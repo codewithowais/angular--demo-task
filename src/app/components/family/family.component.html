@@ -1,0 +1,50 @@
+<div>
+  <form *ngIf="!isEditMode">
+    <div class="form-group form-inline">
+      <h4>Family search: </h4>
+      <input class="form-control ml-2" type="text" [formControl]="filter" />
+    </div>
+  </form>
+
+  <button *ngIf="!isEditMode && filteredMembers.length" class="btn btn-success pull-right" (click)="generateRCA()">Generate RCA</button>
+
+  <form *ngIf="isEditMode">
+    <div class="form-group form-inline">
+      <label>Name</label>
+      <input class="form-control ml-2" type="text" [formControl]="name" />
+    </div>
+    <div class="form-group form-inline">
+      <label>Relation</label>
+      <input class="form-control ml-2" type="text" [formControl]="relation" />
+    </div>
+    <button *ngIf="isEditMode" class="btn btn-info" (click)="updateMember()">Update</button>
+    <button *ngIf="isEditMode" class="btn btn-default" (click)="cancel()">Cancel</button>
+  </form>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Relation</th>
+        <th *ngIf="loggedInUser.role === 'Admin'">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let member of filteredMembers; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>
+          <ngb-highlight [result]="member.name" [term]="filter.value"></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight [result]="member.relation" [term]="filter.value"></ngb-highlight>
+        </td>
+        <td *ngIf="loggedInUser.role === 'Admin'">
+          <button *ngIf="!isEditMode" class="btn btn-primary" (click)="editMember(i)">Edit</button>
+          <button *ngIf="!isEditMode" class="btn btn-danger" (click)="deleteMember(i)">Delete</button>
+        </td>
+      </tr>
+      <tr *ngIf="!filteredMembers.length">No memeber found</tr>
+    </tbody>
+  </table>
+</div>

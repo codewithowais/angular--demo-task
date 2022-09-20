@@ -1,0 +1,19 @@
+<div>
+    <form>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Username</label>
+            <input type="email" class="form-control" id="exampleFormControlInput1" 
+            placeholder="name@example.com" [formControl]="username">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="exampleFormControlInput2"
+            placeholder="name@example.com" [formControl]="password">
+          </div>
+
+          <div>
+            <button type="button" class="btn btn-primary"
+            (click)="login()">Login</button>
+          </div>
+    </form>
+</div>
